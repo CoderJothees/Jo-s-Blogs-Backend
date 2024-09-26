@@ -149,7 +149,8 @@ app.post('/logout', (req, res) => {
         if (err) throw err;
         res.clearCookie('token',{
             secure: true,
-            sameSite: 'None'
+            sameSite: 'None',
+            path: '/'
         }); 
     });
 
