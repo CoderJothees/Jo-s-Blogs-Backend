@@ -61,8 +61,10 @@ app.post('/login', async (req, res) => {
                 if (err) throw err;
                 res.cookie('token', token,{
                     maxAge: 86400 * 1000,
+                    httpOnly: true,
                     secure: true,
-                    sameSite: 'None'
+                    sameSite: 'None',
+                    path: '/'
                 }).json({
                     id: userDoc._id,
                     username: userDoc.username,
@@ -148,6 +150,7 @@ app.post('/logout', (req, res) => {
     jwt.verify(token, secret, {}, async (err, info) => {
         if (err) throw err;
         res.clearCookie('token',{
+            httpOnly: true,
             secure: true,
             sameSite: 'None',
             path: '/'
