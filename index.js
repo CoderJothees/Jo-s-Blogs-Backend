@@ -145,18 +145,12 @@ app.put('/ResetPassword', async (req,res)=>{
 });
 
 app.post('/logout', (req, res) => {
-
-    const { token } = req.cookies;
-    jwt.verify(token, secret, {}, async (err, info) => {
-        if (err) throw err;
         res.clearCookie('token',{
             httpOnly: true,
             secure: true,
             sameSite: 'None',
             path: '/'
         }); 
-    });
-
     // res.cookie('token', "null").json('ok');
 });
 
