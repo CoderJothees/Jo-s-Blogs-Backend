@@ -17,7 +17,7 @@ const fs = require('fs');
 const salt = bcrypt.genSaltSync(10);
 const secret = 'asuhdfjsdbvcfawiuegfas';
 
-app.use(cors({ credentials: true, origin: ['http://localhost:5173', 'http://localhost:3000','http://192.168.87.94:5173'] }));
+app.use(cors({ credentials: true, origin: ['*'] }));
 app.use(express.json());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
