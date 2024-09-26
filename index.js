@@ -59,7 +59,10 @@ app.post('/login', async (req, res) => {
         if (checkPass) {
             jwt.sign({ username: userDoc.username, id: userDoc._id, email: userDoc.email, }, secret, {}, (err, token) => {
                 if (err) throw err;
-                res.cookie('token', token).json({
+                res.cookie('token', token,{
+                    maxAge: 86400 * 1000,
+                    secure: true,
+                }).json({
                     id: userDoc._id,
                     username: userDoc.username,
                     email: userDoc.email,
