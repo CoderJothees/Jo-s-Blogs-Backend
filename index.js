@@ -147,7 +147,10 @@ app.post('/logout', (req, res) => {
     const { token } = req.cookies;
     jwt.verify(token, secret, {}, async (err, info) => {
         if (err) throw err;
-        res.clearCookie('token'); 
+        res.clearCookie('token',{
+            secure: true,
+            sameSite: 'None'
+        }); 
     });
 
     // res.cookie('token', "null").json('ok');
