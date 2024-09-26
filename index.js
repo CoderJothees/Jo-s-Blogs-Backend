@@ -143,11 +143,14 @@ app.put('/ResetPassword', async (req,res)=>{
 });
 
 app.post('/logout', (req, res) => {
-    res.cookie('token',{
-         maxAge: 0,
-         secure: true,
-         sameSite: 'None'
-    }).json('ok');
+
+    const { token } = req.cookies;
+    jwt.verify(token, secret, {}, async (err, info) => {
+        if (err) throw err;
+        res.clearCookie('token'); 
+    });
+
+    // res.cookie('token', "null").json('ok');
 });
 
 app.post('/post', uploadMiddleWare.single('file'), async (req, res) => {
