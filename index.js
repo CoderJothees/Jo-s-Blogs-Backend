@@ -59,10 +59,11 @@ app.post('/login', async (req, res) => {
         if (checkPass) {
             jwt.sign({ username: userDoc.username, id: userDoc._id, email: userDoc.email, }, secret, {}, (err, token) => {
                 if (err) throw err;
-                res.cookie('token', token,{
+                res.cookie('token', token, {
                     maxAge: 86400 * 1000,
                     domain: 'jo-s-blogs-backend.onrender.com',
-                    sameSite: true
+                    sameSite: true,
+                    secure: true
                 }).json({
                     id: userDoc._id,
                     username: userDoc.username,
@@ -145,7 +146,8 @@ app.put('/ResetPassword', async (req,res)=>{
 app.post('/logout', (req, res) => {
         res.clearCookie('token',{
             domain: 'jo-s-blogs-backend.onrender.com',
-            sameSite: true
+            sameSite: 'None',
+            secure: true
         }); 
     // res.cookie('token', "null").json('ok');
 });
