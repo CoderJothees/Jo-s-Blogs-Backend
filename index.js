@@ -17,7 +17,7 @@ const fs = require('fs');
 const salt = bcrypt.genSaltSync(10);
 const secret = 'asuhdfjsdbvcfawiuegfas';
 
-app.use(cors({ credentials: true, origin: ['http://localhost:5173', 'http://localhost:3000','http://192.168.87.94:5173'] }));
+app.use(cors({ credentials: true, origin: ['http://localhost:5173'] }));
 app.use(express.json());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
@@ -59,7 +59,10 @@ app.post('/login', async (req, res) => {
         if (checkPass) {
             jwt.sign({ username: userDoc.username, id: userDoc._id, email: userDoc.email, }, secret, {}, (err, token) => {
                 if (err) throw err;
-                res.cookie('token', token).json({
+                res.cookie('token', token,{
+                    maxAge: 86400 * 1000,
+                    domain: 'jo-s-blogs-backend.onrender.com'
+                }).json({
                     id: userDoc._id,
                     username: userDoc.username,
                     email: userDoc.email,
@@ -139,7 +142,10 @@ app.put('/ResetPassword', async (req,res)=>{
 });
 
 app.post('/logout', (req, res) => {
-    res.cookie('token', "null").json('ok');
+        res.clearCookie('token',{
+            domain: 'jo-s-blogs-backend.onrender.com'
+        }); 
+    // res.cookie('token', "null").json('ok');
 });
 
 app.post('/post', uploadMiddleWare.single('file'), async (req, res) => {
