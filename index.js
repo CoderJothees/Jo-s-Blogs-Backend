@@ -61,11 +61,7 @@ app.post('/login', async (req, res) => {
                 if (err) throw err;
                 res.cookie('token', token,{
                     maxAge: 86400 * 1000,
-                    domain: 'jo-s-blogs-backend.onrender.com', 
-                    httpOnly: true,
-                    secure: true,
-                    sameSite: 'None',
-                    path: '/'
+                    domain: 'jo-s-blogs-backend.onrender.com'
                 }).json({
                     id: userDoc._id,
                     username: userDoc.username,
@@ -147,10 +143,7 @@ app.put('/ResetPassword', async (req,res)=>{
 
 app.post('/logout', (req, res) => {
         res.clearCookie('token',{
-            httpOnly: true,
-            secure: true,
-            sameSite: 'None',
-            path: '/'
+            domain: 'jo-s-blogs-backend.onrender.com'
         }); 
     // res.cookie('token', "null").json('ok');
 });
