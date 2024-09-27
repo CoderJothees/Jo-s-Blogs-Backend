@@ -62,7 +62,7 @@ app.post('/login', async (req, res) => {
                 res.cookie('token', token, {
                     maxAge: 86400 * 1000,
                     domain: 'jo-s-blogs-backend.onrender.com',
-                    sameSite: true,
+                    sameSite: 'None',
                     secure: true
                 }).json({
                     id: userDoc._id,
