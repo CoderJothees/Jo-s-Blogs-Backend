@@ -61,6 +61,7 @@ app.post('/login', async (req, res) => {
                 if (err) throw err;
                 res.cookie('token', token,{
                     maxAge: 86400 * 1000,
+                    domain: 'jo-s-blogs-backend.onrender.com', 
                     httpOnly: true,
                     secure: true,
                     sameSite: 'None',
