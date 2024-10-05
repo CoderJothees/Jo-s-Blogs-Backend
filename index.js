@@ -57,11 +57,9 @@ app.post('/login', async (req, res) => {
         // console.log(userDoc);
         const checkPass = bcrypt.compareSync(password, userDoc.password);
         if (checkPass) {
-            jwt.sign({ username: userDoc.username, id: userDoc._id, email: userDoc.email, }, secret, {}, (err, token) => {
+            jwt.sign({ username: userDoc.username, id: userDoc._id, email: userDoc.email }, secret, {}, (err, token) => {
                 if (err) throw err;
-                res.cookie('token', token, {
-                    maxAge: 80640 * 1000
-                }).json({
+                res.cookie('token', token).json({
                     id: userDoc._id,
                     username: userDoc.username,
                     email: userDoc.email,
@@ -141,8 +139,17 @@ app.put('/ResetPassword', async (req,res)=>{
 });
 
 app.post('/logout', (req, res) => {
-        //res.clearCookie('token'); 
-    res.cookie('token', '').json('ok');
+    console.log("Req Reached");
+    
+    res.clearCookie('token').json('ok'); 
+    console.log("Req complete");
+    // res.cookie('token', '', { 
+    //     path: '/',
+    //     expires: new Date(0)
+    //  });
+
+        
+        // res.cookie('token','').json('ok');
 });
 
 app.post('/post', uploadMiddleWare.single('file'), async (req, res) => {
