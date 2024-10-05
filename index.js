@@ -146,7 +146,11 @@ app.put('/ResetPassword', async (req,res)=>{
 app.post('/logout', (req, res) => {
     console.log("Req Reached");
     
-    res.clearCookie('token').json('ok'); 
+    res.clearCookie('token',{
+        httpOnly: true,
+        secure: true,
+        sameSite: 'None',
+    }).json('ok'); 
     console.log("Req complete");
     // res.cookie('token', '', { 
     //     path: '/',
