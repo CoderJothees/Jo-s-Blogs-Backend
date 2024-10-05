@@ -17,7 +17,7 @@ const fs = require('fs');
 const salt = bcrypt.genSaltSync(10);
 const secret = 'asuhdfjsdbvcfawiuegfas';
 
-app.use(cors({ credentials: true, origin: ['http://localhost:5173'] }));
+app.use(cors({ credentials: true, origin: ['http://localhost:5173', 'http://localhost:5174'] }));
 app.use(express.json());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
@@ -59,7 +59,9 @@ app.post('/login', async (req, res) => {
         if (checkPass) {
             jwt.sign({ username: userDoc.username, id: userDoc._id, email: userDoc.email }, secret, {}, (err, token) => {
                 if (err) throw err;
-                res.cookie('token', token).json({
+                res.cookie('token', token,{
+                    maxAge: 84600*1000
+                }).json({
                     id: userDoc._id,
                     username: userDoc.username,
                     email: userDoc.email,
