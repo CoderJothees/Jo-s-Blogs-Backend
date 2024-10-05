@@ -60,9 +60,10 @@ app.post('/login', async (req, res) => {
             jwt.sign({ username: userDoc.username, id: userDoc._id, email: userDoc.email }, secret, {}, (err, token) => {
                 if (err) throw err;
                 res.cookie('token', token,{
-                    maxAge: 84600*1000,
+                    maxAge: 86400 * 1000,
                     httpOnly: true,
                     secure: true,
+                    sameSite: 'None',
                 }).json({
                     id: userDoc._id,
                     username: userDoc.username,
